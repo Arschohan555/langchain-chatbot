@@ -3,16 +3,9 @@ from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-import os
-from dotenv import load_dotenv
-MAX_TURNS =int(os.getenv("MODEL_NAME", "5"))
-MODEL_NAME =os.getenv("MODEL_NAME","qwen2.5-coder:3b")
-TEMPERATURE =os.getenv("TEMPERATURE", "0.7")
-
-load_dotenv()
 llm = ChatOllama(
-    model= MODEL_NAME, 
-    temperature=TEMPERATURE,
+    model="qwen2.5-coder:3b",
+    temperature=0.7,
     
 
 )
@@ -35,7 +28,7 @@ prompt = ChatPromptTemplate.from_messages(
 
 chain = prompt | llm | StrOutputParser()
 chat_history =[]
-# MAX_TURNS = 5
+MAX_TURNS = 5
 
 def chat(question):
 
@@ -82,8 +75,3 @@ def main():
         print("AI:", chat(user_input))  
 
 main()
-
-
-
-# for chunk in chain.stream({"topic": "AI", "question": "What is RAG?"}):
-#     print(chunk, end="", flush=True)
